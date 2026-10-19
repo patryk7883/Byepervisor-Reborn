@@ -8,15 +8,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/ps5-payload-dev/sdk:latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           submodules: recursive
-
-      - name: Setup PS5 Payload SDK
-        uses: PS5Dev/ps5-payload-sdk-action@v1
 
       - name: Build Payload
         run: |
