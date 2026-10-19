@@ -1,6 +1,6 @@
 YAML
 
-name: Build Byepervisor Payload
+name: Build Byepervisor Reborn
 
 on:
   push:
@@ -12,22 +12,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-    - name: Install Dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential clang llvm
+      - name: Setup PS5 Payload SDK
+        uses: PS5Dev/ps5-payload-sdk-action@v1
 
-    - name: Compile Payload
-      run: |
-        make
+      - name: Build Payload
+        run: |
+          make
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: byepervisor-elf
-        path: |
-          *.elf
-          bin/
+      - name: Upload ELF Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: byepervisor-elf
+          path: |
+            *.elf
+            bin/*.elf
